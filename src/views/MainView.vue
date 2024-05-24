@@ -5,6 +5,7 @@
             style="width: 150px;background-color: #f9f9f9;"
             router
         >
+            <el-menu-item class="title"><img src="/src/assets/img/logo.jpg"/>家政</el-menu-item>
             <el-menu-item index="/">首页</el-menu-item>
             <el-menu-item index="/service">服务列表</el-menu-item>
             <el-menu-item index="/personnel">服务人员</el-menu-item>
@@ -21,7 +22,7 @@
             <el-menu-item class="personal" v-show="userStroe.isLogin" @click="logout()">
                 <template #title>
                     <div class="avatar">
-                        <img src="/src/assets/avatar/default.jpg" />
+                        <img :src="'/src/assets/avatar/'+userStroe.avatar" />
                     </div>
                     <div class="info">
                         <span>{{ userStroe.name }}</span>
@@ -56,6 +57,21 @@ const logout = () => {
 }
 </script>
 <style scoped>
+.title{
+    border-bottom: 1px solid #ebeef5;
+    font-size: 18px;
+    font-weight: bold;
+}
+.title:hover{
+    background-color: #f9f9f9;
+
+}
+.title img{
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin-right: 10px;
+}
 .main{
     display: flex;
     width: 100vw;
@@ -64,10 +80,11 @@ const logout = () => {
     overflow: hidden;
 }
 .content{
-    width: calc(100vw - 190px);
+    width: calc(100vw - 180px);
     height: calc(100vh - 40px);
     margin: 20px;
-    border-radius: 10px;
+    margin-right: 10px;
+    overflow: hidden;
 }
 .personal{
     position: absolute;

@@ -7,7 +7,11 @@
                 style="width: 100%">
                 <el-table-column label="公司id" prop="id"/>
                 <el-table-column label="公司名称" prop="name"/>
-                <el-table-column label="所属用户" prop="user"/>
+                <el-table-column label="所属用户" prop="user">
+                    <template #default="{row}">
+                        {{row.name}}({{ row.user }})
+                    </template>
+                </el-table-column>
                 <el-table-column label="创建时间" prop="date"/>
                 <el-table-column width="200">
                     <template #default="{row}">
@@ -21,22 +25,37 @@
             <el-pagination
                 background
                 layout="prev, pager, next"
-                :total="1000">
+                :total="total"
+                @current-change="onCurrentChange"
+                >
             </el-pagination>
         </div>
     </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { findAllCompany } from "@/api/company";
+import { onMounted, ref } from "vue";
 
-const data = ref([
-    {
-        id: 1,
-        name: 'XX公司',
-        user: '张三',
-        date: '2021-09-01'
-    }
-]);
+const data = ref([]);
+const page = ref(1)
+const total = ref(0)
+const onCurrentChange = (e)=>{
+    page.value = e
+    getData()
+}
+const getData = async()=>{
+    await findAllCompany(page.value).then(res=>{
+        let outdata = res.data.data
+        data.value = outdata[0]
+        total.value = outdata[1]
+    }).catch(err=>{
+        ElMessage.error('获取数据失败')
+    })
+}
+const init = () =>{
+    getData()
+}
+onMounted(init)
 </script>
 <style scoped>
 .main{

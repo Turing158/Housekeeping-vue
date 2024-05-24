@@ -5,7 +5,11 @@
             <el-table
                 :data="data"
                 style="width: 100%">
-                <el-table-column label="服务人员" prop="name"/>
+                <el-table-column label="服务人员" prop="name">
+                    <template #default="{row}">
+                        <span>{{ row.name }}</span><span>({{ row.user }})</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="证书" prop="certificate"/>
                 <el-table-column label="相关经验" prop="experience"/>
                 <el-table-column label="所属公司" prop="company"/>
@@ -13,7 +17,7 @@
                 <el-table-column label="" prop="is"/>
                 <el-table-column width="85">
                     <template #default="{row}">
-                        <el-button type="warning" plain>查看</el-button>
+                        <el-button type="warning" plain @click="look(row.user)">查看</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column width="240">
@@ -29,41 +33,47 @@
             <el-pagination
                 background
                 layout="prev, pager, next"
-                :total="1000">
+                :total="total"
+                @current-change="onCurrentChange"
+                >
             </el-pagination>
         </div>
     </div>
 </template>
 <script setup>
+import { findAllServicerOrderByRegion } from "@/api/company";
+import { useUserStore } from "@/stores/user";
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-const data = ref([
-    {
-        name: '张三',
-        certificate: '高级技师',
-        experience: '5年',
-        company: 'XX公司',
-        region: 'XX地区',
-        is: '在职'
-    },
-    {
-        name: '李四',
-        certificate: '高级技师',
-        experience: '5年',
-        company: 'XX公司',
-        region: 'XX地区',
-        is: '在职'
-    },
-    {
-        name: '王五',
-        certificate: '高级技师',
-        experience: '5年',
-        company: 'XX公司',
-        region: 'XX地区',
-        is: '在职'
-    }
-]);
-
+const userStore = useUserStore()
+const region = ref(userStore.region)
+const data = ref([]);
+const page = ref(1)
+const total = ref(0)
+const onCurrentChange = (e)=>{
+    page.value = e
+    getDataToUser()
+}
+const router = useRouter()
+const look = (user)=>{
+    router.push('/personnel/'+user)
+}
+const getDataToUser = async()=>{
+    await findAllServicerOrderByRegion(page.value,region.value).then(res=>{
+        let outdata = res.data.data
+        data.value = outdata[0]
+        total.value = outdata[1]
+    }).catch(err=>{
+        ElMessage.error('获取数据失败')
+    })
+}
+const init = ()=>{
+    getDataToUser()
+}
+onMounted(()=>{
+    init()
+})
 </script>
 <style scoped>
 .main{

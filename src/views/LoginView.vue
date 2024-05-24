@@ -110,6 +110,7 @@ const getUserinfo = async()=>{
             userStore.setName(outData.data.name)
             userStore.setRole(outData.data.role)
             userStore.setRegion(outData.data.region)
+            userStore.setAvatar(outData.data.avatar)
             userStore.setIsLogin(true)
         }
         else{

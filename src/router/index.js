@@ -33,6 +33,26 @@ const router = createRouter({
           path: '/user',
           name: 'User',
           component: () => import('../views/UserView.vue')
+        },
+        {
+          path: '/role',
+          name: 'Role',
+          component: () => import('../views/RoleView.vue')
+        },
+        {
+          path: '/service/:id',
+          name: 'ServiceDetail',
+          component: () => import('../views/ServiceDetailView.vue')
+        },
+        {
+          path: '/personnel/:id',
+          name: 'PersonnelDetail',
+          component: () => import('../views/PersonnelDetailView.vue')
+        },
+        {
+          path: '/confirmOrder/:id',
+          name: 'ConfirmOrder',
+          component: () => import('../views/ConfirmOrderView.vue')
         }
       ]
     },

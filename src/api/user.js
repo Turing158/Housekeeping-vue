@@ -19,3 +19,15 @@ export const register = (data)=>{
     param.append("region",data.region)
     return request.post("/register",param)
 }
+const admin = "/admin"
+export const findAllUser = (page)=>{
+    let param = new URLSearchParams();
+    param.append('page',page);
+    return request.post(admin+"/findAllUser",param)
+}
+
+export const findAllRole = (page)=>{
+    let param = new URLSearchParams();
+    param.append('page',page);
+    return request.post(admin+"/findAllRole",param)
+}

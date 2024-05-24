@@ -6,6 +6,7 @@ export const useUserStore = defineStore('housekeeping-user', () => {
     const name = ref('')
     const role = ref('')
     const region = ref('')
+    const avatar = ref('')
     const token = ref('')
     const isLogin = ref(false)
     
@@ -32,6 +33,9 @@ export const useUserStore = defineStore('housekeeping-user', () => {
     const setIsLogin = (IsLogin)=>{
         isLogin.value = IsLogin
     }
+    const setAvatar = (Avatar)=>{
+        avatar.value = Avatar
+    }
 
     const logout = ()=>{
         user.value = ''
@@ -41,7 +45,7 @@ export const useUserStore = defineStore('housekeeping-user', () => {
         token.value = ''
         isLogin.value = false
     }
-    return { user, name,region, role, token, isLogin, setUser, setName, setRole, setToken, setIsLogin,setRegion,logout }
+    return { user, name,region, role, token, isLogin,avatar, setUser, setName, setRole, setToken, setIsLogin,setRegion,setAvatar,logout }
 },{
     persist:true
 })

@@ -5,10 +5,8 @@
             <el-table
                 :data="data"
                 style="width: 100%">
-                <el-table-column label="用户名" prop="user"/>
-                <el-table-column label="名称" prop="name"/>
-                <el-table-column label="角色" prop="role"/>
-                <el-table-column label="所属地区" prop="region"/>
+                <el-table-column label="角色id" prop="role"/>
+                <el-table-column label="角色名" prop="rolename"/>
                 <el-table-column width="180">
                     <template #default="{row}">
                         <el-button type="primary" plain>编辑</el-button>
@@ -29,7 +27,7 @@
     </div>
 </template>
 <script setup>
-import { findAllUser } from "@/api/user";
+import { findAllRole } from "@/api/user";
 import { onMounted, ref } from "vue";
 
 const data = ref([]);
@@ -40,7 +38,7 @@ const onCurrentChange = (e)=>{
     getData()
 }
 const getData = async()=>{
-    await findAllUser(page.value).then(res=>{
+    await findAllRole(page.value).then(res=>{
         let outData = res.data.data
         data.value = outData[0]
         total.value = outData[1]

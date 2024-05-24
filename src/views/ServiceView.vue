@@ -12,7 +12,7 @@
                 <el-table-column label="所属地区" prop="region"/>
                 <el-table-column width="85">
                     <template #default="{row}">
-                        <el-button type="warning" plain>查看</el-button>
+                        <el-button type="warning" plain @click="look(row.id)">查看</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column width="180">
@@ -39,7 +39,9 @@ import { findAllService } from "@/api/service";
 import { useUserStore } from "@/stores/user";
 import { ElMessage } from "element-plus";
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter()
 const userStore = useUserStore()
 const data = ref([]);
 const page = ref(1)
@@ -49,6 +51,9 @@ const onCurrentChange = (e)=>{
     getDataToUser()
 }
 const region = ref(userStore.region)
+const look = (id)=>{
+    router.push(`/service/${id}`)
+}
 const getDataToUser = async()=>{
     await findAllService(page.value,region.value).then(res=>{
         let outdata = res.data.data
