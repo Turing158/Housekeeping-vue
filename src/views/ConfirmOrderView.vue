@@ -19,6 +19,9 @@
                 <el-form-item label="预约时间" prop="date">
                     <el-date-picker type="datetime" v-model="order.date" value-format="YYYY/MM/DD hh:mm:ss" />
                 </el-form-item>
+                <el-form-item label="预约电话" prop="phone">
+                    <el-input v-model="order.phone"/>
+                </el-form-item>
                 <el-form-item label="预约地址" prop="address">
                     <el-input v-model="order.address" style="width: 500px;"/>
                 </el-form-item>
@@ -48,7 +51,8 @@ const route = useRoute()
 const order = ref({
     date: dateObj.getFullYear()+'/'+fixZero(dateObj.getMonth()+1)+'/'+fixZero(dateObj.getDate())+' '+fixZero(dateObj.getHours())+':'+fixZero(dateObj.getMinutes())+':'+fixZero(dateObj.getSeconds()),
     address: '',
-    note: ''
+    note: '',
+    phone: ''
 })
 const rule = {
     address: [
@@ -56,7 +60,11 @@ const rule = {
     ],
     date: [
         { required: true, message: '请选择预约时间', trigger: 'change' }
+    ],
+    phone: [
+        { required: true, message: '请输入预约电话', trigger: 'blur' }
     ]
+
 }
 const btnLoading = ref(false)
 const confirm = async()=>{
@@ -64,16 +72,17 @@ const confirm = async()=>{
         service: route.params.id,
         reservedDate: order.value.date,
         reservedPlace: order.value.address,
-        note: order.value.note
+        note: order.value.note,
+        reservedPhone: order.value.phone
     }
-    console.log(obj);
     await form.value.validate().then(async()=>{
         btnLoading.value = true
         await createOrder(obj).then(res=>{
+            let outData = res.data.data
             let msg = res.data.msg
             if(msg=='success'){
                 ElMessage.success('下单成功！')
-                router.push('/order')
+                router.replace('/order/'+outData)
             }
             else{
                 ElMessage.error(msg)

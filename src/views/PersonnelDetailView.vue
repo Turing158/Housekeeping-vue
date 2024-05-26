@@ -18,6 +18,10 @@
                         <br/>
                         <span>服务人员</span>
                     </div>
+                    <div style="float: right;margin-top: -50px;margin-right: 20px;text-align: center;">
+                        历史接单数<br/>
+                        {{ data.history }}
+                    </div>
                 </div>
             </div>
             <div class="content">
@@ -52,13 +56,14 @@ const getData = async()=>{
         console.log(outData);
         data.value = {
             title: '查询服务人员',
-            subtitle: outData.company,
-            name: outData.name,
-            avatar: outData.avatar,
-            experience: outData.experience,
-            certificate: outData.certificate,
-            experienceInfo: outData.experienceInfo,
-            certificateInfo: outData.certificateInfo,
+            subtitle: outData[0].company,
+            name: outData[0].name,
+            avatar: outData[0].avatar,
+            experience: outData[0].experience,
+            certificate: outData[0].certificate,
+            experienceInfo: outData[0].experienceInfo,
+            certificateInfo: outData[0].certificateInfo,
+            history: outData[1]
         }
         loading.value = false
     }).catch(err=>{

@@ -17,7 +17,7 @@
                     <span class="subtitle">
                         {{ subtitle }}
                     </span>
-                    <el-tag class="tag" effect="plain" hit v-for="i in tag" :key="i">{{ i }}</el-tag>
+                    <el-tag class="tag" effect="plain" :type="tagType" hit v-for="i in tag" :key="i">{{ i }}</el-tag>
                 </div>
             </div>
         </template>
@@ -41,6 +41,11 @@ const props = defineProps({
     tag: {
         type: Array,
         required: false
+    },
+    tagType: {
+        type: String,
+        required: false,
+        default: "primary"
     },
     loading: {
         type: Boolean,

@@ -9,14 +9,14 @@
             <el-menu-item index="/">首页</el-menu-item>
             <el-menu-item index="/service">服务列表</el-menu-item>
             <el-menu-item index="/personnel">服务人员</el-menu-item>
-
+            <el-menu-item index="/orderList">订单列表</el-menu-item>
 
             <el-sub-menu index="/admin">
                 <template #title>管理</template>
                 <el-menu-item index="/company">公司列表</el-menu-item>
                 <el-menu-item index="/user">用户列表</el-menu-item>
                 <el-menu-item index="/role">用户权限</el-menu-item>
-                <el-menu-item index="/order">订单列表</el-menu-item>
+                <el-menu-item index="/orderListAdmin">订单列表</el-menu-item>
             </el-sub-menu>
 
             <el-menu-item class="personal" v-show="userStroe.isLogin" @click="logout()">

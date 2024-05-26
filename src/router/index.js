@@ -40,6 +40,16 @@ const router = createRouter({
           component: () => import('../views/RoleView.vue')
         },
         {
+          path: '/orderList',
+          name: 'OrderList',
+          component: () => import('../views/OrderListView.vue')
+        },
+        {
+          path: '/orderListAdmin',
+          name: 'OrderListAdmin',
+          component: () => import('../views/OrderListAdminView.vue')
+        },
+        {
           path: '/service/:id',
           name: 'ServiceDetail',
           component: () => import('../views/ServiceDetailView.vue')
@@ -53,6 +63,11 @@ const router = createRouter({
           path: '/confirmOrder/:id',
           name: 'ConfirmOrder',
           component: () => import('../views/ConfirmOrderView.vue')
+        },
+        {
+          path: '/order/:id',
+          name: 'Order',
+          component: () => import('../views/OrderView.vue')
         }
       ]
     },
