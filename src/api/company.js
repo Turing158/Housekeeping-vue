@@ -12,6 +12,9 @@ export const findServicerByUser = (user)=>{
     param.append('user',user);
     return request.post("/findServicerByUser",param)
 }
+export const findAllSelectCompany = ()=>request.post("/findAllSelectCompany")
+
+export const submitEmployRecord = (data)=>request.post("/submitEmployRecord",data)
 
 const admin = "/admin"
 
