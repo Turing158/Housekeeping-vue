@@ -44,16 +44,18 @@
                 </el-table-column>
                 <el-table-column width="120" fixed="right">
                     <template #default="{row}">
-                        <el-button 
-                        v-show="row.reservedUser == userStore.user"
-                        :type="row.status == 'paid'?'success':row.status == 'start'?'danger':row.status == 'end'?'primary':'info'" 
-                        plain 
-                        @click="operate(row.id,row.status,row.userEvaluateStar,row.userEvaluate)"
-                        :disabled="disabled"
-                        >
-                        {{ row.status == 'paid'?'接受服务':row.status == 'start'?'完成服务':row.status == 'end'?'查看评价':'等待评价' }}
-                        </el-button>
-                        <el-button v-show="row.createUser == userStore.user" type="primary" @click="evaluate()">评价</el-button>
+                        <div>
+                            <el-button 
+                            v-show="row.reservedUser == userStore.user"
+                            :type="row.status == 'paid'?'success':row.status == 'start'?'danger':row.status == 'end'?'primary':'info'" 
+                            plain 
+                            @click="operate(row.id,row.status,row.userEvaluateStar,row.userEvaluate)"
+                            :disabled="disabled"
+                            >
+                            {{ row.status == 'paid'?'接受服务':row.status == 'start'?'完成服务':row.status == 'end'?'查看评价':'等待评价' }}
+                            </el-button>
+                            <el-button v-show="row.createUser == userStore.user && row.status == 'complete'" type="primary" @click="evaluate()">评价</el-button>
+                        </div>
                     </template>
                 </el-table-column>
             </el-table>
@@ -117,10 +119,16 @@ const getDataToUser = async()=>{
     await findAllOrderToUser(page.value).then(res=>{
         let msg = res.data.msg
         if(msg == 'success'){
-            data.value = res.data.data[0]
-            total.value = res.data.data[1]
+            let outdata = res.data.data
+            if(outdata != null){
+                data.value = outdata[0]
+                total.value = outdata[1]
+            }
+            else{
+                ElMessage.warning('没有数据')
+            }
         }else{
-            ElMessage.error(res.message)
+            ElMessage.error(res.data.msg)
         }
     })
 }
@@ -128,9 +136,14 @@ const getDataToServicer = async()=>{
     await findAllOrderToServicer(page.value).then(res=>{
         let msg = res.data.msg
         if(msg == 'success'){
-            console.log(res.data.data);
-            data.value = res.data.data[0]
-            total.value = res.data.data[1]
+            let outdata = res.data.data
+            if(outdata != null){
+                data.value = outdata[0]
+                total.value = outdata[1]
+            }
+            else{
+                ElMessage.warning('无数据')
+            }
         }else{
             ElMessage.error(res.message)
         }

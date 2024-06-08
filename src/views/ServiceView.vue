@@ -17,8 +17,11 @@
                 </el-table-column>
                 <el-table-column width="180">
                     <template #default="{row}">
-                        <el-button type="primary" plain>编辑</el-button>
-                        <el-button type="danger" plain>删除</el-button>
+                        <div v-show="(userStore.role == 'admin')?true:(userStore.role == 'servicer' && userStore.user == row.user)">
+                            <el-button type="primary" plain>编辑</el-button>
+                            <el-button type="danger" plain>删除</el-button>
+                        </div>
+                        
                     </template>
                 </el-table-column>
             </el-table>
@@ -57,8 +60,13 @@ const look = (id)=>{
 const getDataToUser = async()=>{
     await findAllService(page.value,region.value).then(res=>{
         let outdata = res.data.data
-        data.value = outdata[0]
-        total.value = outdata[1]
+        if(outdata != null){
+            data.value = outdata[0]
+            total.value = outdata[1]
+        }
+        else{
+            ElMessage.warning('无数据')
+        }
     }).catch(err=>{
         ElMessage.error('获取数据失败')
     })

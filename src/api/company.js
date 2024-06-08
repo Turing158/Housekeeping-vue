@@ -16,6 +16,24 @@ export const findAllSelectCompany = ()=>request.post("/findAllSelectCompany")
 
 export const submitEmployRecord = (data)=>request.post("/submitEmployRecord",data)
 
+export const findAllEmployRecordByUser = (page)=>request.post("/findAllEmployRecordByUser",null,{params:{page:page}})
+
+export const findAllEmployRecordByCompany = (page)=>request.post("/findAllEmployRecordByCompany",null,{params:{page:page}})
+
+export const operateEmployRecord = (obj)=>request.post(
+    "/operateEmployRecord",
+    null,
+    {
+        params:{
+            id:obj.id,
+            note:obj.note,
+            isAccept:obj.isAccept
+        }
+    }
+)
+
+export const findServicerAchievement = (user)=>request.post("/findServicerAchievement",null,{params:{user:user}})
+
 const admin = "/admin"
 
 export const findAllCompany = (page)=>{
