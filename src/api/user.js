@@ -31,3 +31,9 @@ export const findAllRole = (page)=>{
     param.append('page',page);
     return request.post(admin+"/findAllRole",param)
 }
+
+export const uploadAvatar = (A)=>{
+    let param = new URLSearchParams();
+    param.append("avatar",A)
+    return request.post("/uploadAvatar",param)
+}
